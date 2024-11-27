@@ -1,37 +1,12 @@
 // src/components/FilterSection.jsx
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import tailwindStyles from "../utils/tailwindStyles";
+import { FaFilter } from "react-icons/fa6";
 
-const FilterSection = ({
-  // city,
-  // setCity,
-  // builder,
-  // setBuilder,
-  // communities,
-  // selectedCommunities,
-  // handleCommunityChange,
-  // bedroomTypes,
-  // selectedBedroomTypes,
-  // handleBedroomTypeChange,
-  // newPropertySize,
-  // setNewPropertySize,
-  // newPricing,
-  // setNewPricing,
-  // newBedroom,
-  // incrementBedroom,
-  // decrementBedroom,
-  // newBathroom,
-  // incrementBathroom,
-  // decrementBathroom,
-  // newTenantType,
-  // setNewTenantType,
-  // newParking,
-  // setNewParking,
-  // newFurnishing,
-  // setNewFurnishing,
-}) => {
+const FilterSection = () => {
   const [isShow, setIsShow] = useState(false)
 
+  const [stateValue] = useState(['AP','TG'])
   const [cityValues] = useState(["Hyderabad","Vijayawada","Warangal","Noida"]);
   const [builderValues] = useState(["My Home Ganga","Aparna","Rajpushpa","My Home Baja"]);
   const [communities] = useState(["QTI Town", "QTI Apartments", "QTI Village", "None"]);
@@ -41,6 +16,7 @@ const FilterSection = ({
   const [parkingValues] = useState(["1 Vehicle Parking", "2 Vehicle Parking"])
   const [furnishingValues] = useState(["Fully Furnished", "Semi Furnished", "Unfurnished"])
 
+  const [state,setState] = useState("");
   const [city, setCity] = useState("");
   const [builder, setBuilder] = useState("");
   const [selectedCommunities, setSelectedCommunities] = useState([]);
@@ -77,10 +53,27 @@ const FilterSection = ({
 
   return (
     <>
-     <button className={`${tailwindStyles.thirdButton} block lg:hidden`} onClick={() =>{setIsShow(!isShow)}}>Show Filters</button>
-    <div className={`${tailwindStyles.card} hidden lg:block lg:w-1/4 p-4 rounded shadow-sm h-screen fixed top-26 left-0 z-10`}> {/*h-screen fixed top-26 left-0 z-10*/}
+     <button className={`block lg:hidden flex items-center`} onClick={() =>{setIsShow(!isShow)}}>
+      <FaFilter/>
+      <p className="m-0 pl-2">Filters</p>
+     </button>
+    <div className={`${tailwindStyles.card} hidden lg:block lg:w-1/4 p-4 rounded shadow-sm h-3/4 fixed top-26 left-0`}> {/*h-screen fixed top-26 left-0 z-10*/}
       <h2 className="text-lg font-semibold mb-4">Filter</h2>
-      <form style={{ maxHeight: "calc(100% - 150px)" }} className="space-y-4 overflow-y-auto"> {/*style={{ maxHeight: "calc(100% - 150px)" }}*/}
+      <form style={{ maxHeight: "calc(100% - 50px)" }} className="space-y-4 overflow-y-auto"> {/*style={{ maxHeight: "calc(100% - 150px)" }}*/}
+        {/* State Filter */}
+        <div>
+          <label className="block font-medium mb-2">State</label>
+          <select
+            className="w-full border rounded px-3 py-2"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+          >
+            <option value="">Select State</option>
+            {stateValue.map(each => (
+              <option value={each}>{each}</option>
+            ))}
+          </select>
+        </div>
         {/* City Filter */}
         <div>
           <label className="block font-medium mb-2">City</label>
@@ -297,7 +290,7 @@ const FilterSection = ({
     </div>
     {/* For Mobile............. */} 
     {isShow &&
-        <div div className={`${tailwindStyles.card} lg:hidden lg:w-1/4 p-4 rounded shadow-sm`}>
+        <div div className={`${tailwindStyles.card} lg:hidden lg:w-1/4 p-4 h-3/4 rounded shadow-sm`}>
           <h2 className="text-lg font-semibold mb-4">Filter</h2>
           <form className="space-y-4 overflow-y-auto"> {/*style={{ maxHeight: "calc(100% - 150px)" }}*/}
         {/* City Filter */}
